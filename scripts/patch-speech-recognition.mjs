@@ -17,6 +17,8 @@ export function patchSpeechRecognitionPlugin(rootDir = root) {
   }
 
   let source = readFileSync(path, 'utf8')
+  .replace(/\r\n/g, '\n')
+  .replace(/\r/g, '\n')
   if (source.includes(MARKER)) {
     console.log('Android speech-recognition lifecycle fix already applied.')
     return
