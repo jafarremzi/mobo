@@ -1,0 +1,32 @@
+{
+  "name": "notes-reminder-app",
+  "private": true,
+  "version": "1.4.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:https": "vite --host --mode https",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "android:prepare": "node scripts/prepare-android.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/local-notifications": "^7.0.0",
+    "@capacitor-community/speech-recognition": "7.0.1",
+    "@fontsource/vazirmatn": "^5.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "jsdom": "^25.0.1",
+    "vite": "^5.4.0",
+    "vitest": "^2.1.9",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/android": "^7.0.0"
+  }
+}

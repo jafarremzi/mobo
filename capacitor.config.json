@@ -1,0 +1,15 @@
+{
+  "appId": "ir.yourname.notes",
+  "appName": "دفترچه یادداشت",
+  "webDir": "dist",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_notes",
+      "iconColor": "#4F5BD5",
+      "sound": "bell.wav"
+    }
+  }
+}

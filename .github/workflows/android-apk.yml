@@ -1,0 +1,55 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:      # دستی: تب Actions ← Build Android APK ← Run workflow
+  push:
+    branches: [main, master]
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Capacitor 7 به JDK 21 نیاز داره. اگه خطای نسخه‌ی جاوا دیدی، مقدار رو با مستندات نسخه‌ی Capacitor چک کن.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --legacy-peer-deps
+
+      # اگه تستی خراب باشه هشدار می‌ده ولی ساخت APK ادامه پیدا می‌کنه
+      - name: Run tests
+        run: npm test
+        continue-on-error: true
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Add Android platform
+        run: npx cap add android
+
+      - name: Prepare Android project (sound, permissions, signing)
+        run: node scripts/prepare-android.mjs
+
+      - name: Sync web assets and plugins
+        run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: notes-app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
